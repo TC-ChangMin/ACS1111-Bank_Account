@@ -1,5 +1,5 @@
 from stretch_challenges import BankAccount 
-
+# imported the class from the other file because i didnt want to recode it
 class Bank:
     def __init__(self, list_of_accounts):
         self.list_of_accounts = list_of_accounts
@@ -27,10 +27,15 @@ my_list = [Mitchell, Dani, Braus]
 
 test = Bank(my_list)
 
-test.create_account('person', "03141592", 1000)
+# test.create_account('person', "03141592", 1000)
+# test.create_account('person2', "11111111", 1000)
+# test.create_account('person3', "11111111", 1000)
 
-# for account in test.list_of_accounts:
-#     print(account.name)
-#     print(account.account_number)
+for account in test.list_of_accounts:
+    print(account.name)
+    print(account.account_number)
+
+
 
 print(test.transfer("03141592", "987654321", 500))
+# this should be changed to the names of mitchell and dani but i dont know how to do that yet

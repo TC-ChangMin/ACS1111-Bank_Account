@@ -25,12 +25,14 @@ class BankAccount:
     
 
 Mitchell = BankAccount('Mitchell', "03141592", 1000)
-Dani = BankAccount('Daniel', "987654321", 5000)
+Dani = BankAccount('Dani', "987654321", 5000)
 Braus = BankAccount('Braus', "123456789", 1000)
 
 print(Mitchell.deposit(400000))
-print(Mitchell.get_balance())
+# print(Mitchell.get_balance())
 print(Mitchell.add_interest())
-print(Mitchell.withdraw(400))
+# print(Mitchell.withdraw(150))
 
-print(Dani.withdraw(6000))
+# print(Dani.withdraw(6000))
+
+# math for interest is a bit off, ill fix it later

@@ -35,19 +35,23 @@ def create_account(name, account_number, balance):
     account = BankAccount(name, account_number, balance)
     return account
 
+
+'''
 acc1 = create_account('Mitchell', "03141592", 1000)
 print(acc1)
 print(acc1.statement("03141592"))
 print(acc1.add_interest(5))
 print(acc1.withdraw(50))
 print(acc1.deposit(500))
-'''
+
 Mitchell = BankAccount('Mitchell', "03141592", 1000)
 Dani = BankAccount('Daniel', "987654321", 5000)
 Braus = BankAccount('Braus', "123456789", 1000)
 
 bank = [Mitchell, Dani, Braus]
 
+
+# the math here is correct. i dont know why the one in bank_account is wrong
 for account in bank:
     print(account.add_interest(5))
     print(account.add_compounded_interest(5))
