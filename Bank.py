@@ -1,4 +1,4 @@
-from stretch_challenges import BankAccount 
+from bank_account import BankAccount 
 # imported the class from the other file because i didnt want to recode it
 class Bank:
     def __init__(self, list_of_accounts):
@@ -37,5 +37,5 @@ for account in test.list_of_accounts:
 
 
 
-print(test.transfer("03141592", "987654321", 500))
+# print(test.transfer("03141592", "987654321", 500))
 # this should be changed to the names of mitchell and dani but i dont know how to do that yet

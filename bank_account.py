@@ -1,38 +1,103 @@
+import random as rand
+import os
+
+
+colors = {
+    'red': '\033[91m',
+    'green': '\033[92m',
+    'orange': '\033[93m',
+    'blue': '\033[94m',
+    'reset': '\033[0m'
+}
+
 class BankAccount:
-    def __init__(self, full_name, account_number, balance):
-        self.full_name = full_name
+    def __init__(self, name, account_number, balance):
+        self.name = name
         self.account_number = account_number
         self.balance = balance
 
     def deposit(self, amount):
         self.balance += amount
-        return f'Amount deposited: ${amount:,.2f} new balance: ${self.balance:,.2f}'
+        return f'Amount deposited: {colors['green']}${amount:,.2f}{colors['reset']} new balance: {colors['green']}${self.balance:,.2f}{colors['reset']}'
     
     def withdraw(self, amount):
         self.balance -= amount
         if amount > self.balance:
-            return f'Insufficient funds: overdraft fee of $10.\nWithdrawing ${amount:,.2f}...\nNew balance: -${abs(self.balance - 10):,.2f}'
-        return f'Amount withdrawn: ${amount:,.2f} new balance: ${self.balance:,.2f}'
+            return f'Insufficient funds: overdraft fee of {colors['red']}$10{colors['reset']}.\nWithdrawing {colors['red']}${amount:,.2f}{colors['reset']}...\nNew balance: {colors['red']}-${abs(self.balance - 10):,.2f}{colors['reset']}'
+        return f'Amount withdrawn: {colors['red']}${amount:,.2f}{colors['reset']} new balance: {colors['green']}${self.balance:,.2f}{colors['reset']}'
+    
+    def print_reciept(self):
+        return (
+            f"Name: {colors['blue']}{self.name}{colors['reset']}\n"
+            f"Account Number: {colors['blue']}{self.account_number}{colors['reset']}\n"
+            f"Balance: {self.get_balance()}"
+        )
     
     def get_balance(self):
-        return f'Current balance: ${self.balance:,.2f}'
+        if self.balance < 0:
+            return f"{colors['blue']}{self.name}{colors['reset']} has a current balance of: {colors['red']}-${abs(self.balance):,.2f}{colors['reset']}"
+        return f"{colors['blue']}{self.name}{colors['reset']} has a current balance of: {colors['green']}${abs(self.balance):,.2f}{colors['reset']}"
+
+    # 1.2% annaul interest rate
+    def add_interest(self, years):
+        if self.balance < 0:
+            return f"You will have {colors['red']}-${self.balance * (1+ 0.012 * years):,.2f} after {years} years"
+        return f"You will have {colors['green']}${self.balance * (1+ 0.012 * years):,.2f} after {years} years"
     
-    def add_interest(self):
-        interest = self.balance * 0.00083
-        self.balance += interest
-        annual = self.balance * (1+0.00083) * 12
-        return f'Interest added after one month: ${interest:,.2f}\nnew balance: ${self.balance:,.2f}\nEstimated annual balance: ${annual:,.2f}'
+    # 1% monthly interest rate
+    def add_compounded_interest(self,years):
+        return f"Your compounded interest will be {colors['orange']}${self.balance * (1+ (0.01/12)) ** (12 * years):,.2f}{colors['reset']} after {colors['orange']}{years} years{colors['reset']}"
     
 
-Mitchell = BankAccount('Mitchell', "03141592", 1000)
-Dani = BankAccount('Dani', "987654321", 5000)
-Braus = BankAccount('Braus', "123456789", 1000)
+def create_account(name, account_number, balance):
+    account = BankAccount(name, account_number, balance)
+    return account
 
-print(Mitchell.deposit(400000))
-# print(Mitchell.get_balance())
-print(Mitchell.add_interest())
-# print(Mitchell.withdraw(150))
 
-# print(Dani.withdraw(6000))
+accounts = []
+while True:
+    print("Welcome to the bank")
+    print("1. Create Account")
+    print("2. Deposit")
+    print("3. Withdraw")
+    print("4. Print Reciept")
+    print("5. Get Balance")
+    print("6. Add Interest")
+    print("7. Add Compounded Interest")
+    print("8. View Accounts")
+    print("9. Exit")
+    print('C. Clear Terminal')
+    choice = input("What would you like to do? ")
 
-# math for interest is a bit off, ill fix it later
+    if choice == '1':
+        name = input("Enter your name: ")
+        account_number = rand.randint(100000000, 999999999)
+        balance = float(input("Enter your initial balance: "))
+        account = create_account(name, account_number, balance)
+        accounts.append(account)
+        print(f"Account created for {account.name} with account number: {account.account_number} and balance: {account.balance}")
+    elif choice == '2':
+        amount = float(input("Enter the amount you would like to deposit: "))
+        print(account.deposit(amount))
+    elif choice == '3':
+        amount = float(input("Enter the amount you would like to withdraw: "))
+        print(account.withdraw(amount))
+    elif choice == '4':
+        print(account.print_reciept())
+    elif choice == '5':
+        print(account.get_balance())
+    elif choice == '6':
+        years = int(input("Enter the number of years: "))
+        print(account.add_interest(years))
+    elif choice == '7':
+        years = int(input("Enter the number of years: "))
+        print(account.add_compounded_interest(years))
+    elif choice == '8':
+        print(accounts)
+    elif choice == '9':
+        break
+    elif choice == 'c':
+        os.system('clear')
+    else:
+        print("Invalid choice")
+    print("\n\n")
