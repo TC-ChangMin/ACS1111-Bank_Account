@@ -53,10 +53,10 @@ def create_account(name, account_number, balance):
     account = BankAccount(name, account_number, balance)
     return account
 
-
 accounts = []
+
 while True:
-    print("Welcome to the bank")
+    print("Welcome to the bank_account. Interact with your own account(s)")
     print("1. Create Account")
     print("2. Deposit")
     print("3. Withdraw")
@@ -65,13 +65,13 @@ while True:
     print("6. Add Interest")
     print("7. Add Compounded Interest")
     print("8. View Accounts")
-    print("9. Exit")
+    print("9. Enter Bank?")
     print('C. Clear Terminal')
     choice = input("What would you like to do? ")
 
     if choice == '1':
         name = input("Enter your name: ")
-        account_number = rand.randint(100000000, 999999999)
+        account_number = rand.randint(10000000, 99999999)
         balance = float(input("Enter your initial balance: "))
         account = create_account(name, account_number, balance)
         accounts.append(account)
@@ -93,7 +93,8 @@ while True:
         years = int(input("Enter the number of years: "))
         print(account.add_compounded_interest(years))
     elif choice == '8':
-        print(accounts)
+        accounts_dict_list = [(account.name, account.account_number) for account in accounts]
+        print(f"Available accounts are: {colors['orange']}{accounts_dict_list}{colors['reset']}")
     elif choice == '9':
         break
     elif choice == 'c':
